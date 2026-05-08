@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>milsim-planning â€” Plan the Mission. Win the Sim.</title>
+  <title>milsim-planning — Plan the Mission. Win the Sim.</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -29,7 +29,7 @@
       line-height: 1.6;
     }
 
-    /* â”€â”€ NAV â”€â”€ */
+    /* -- NAV -- */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: rgba(10,12,15,0.92);
@@ -44,13 +44,15 @@
       color: var(--heading); text-transform: uppercase;
     }
     .nav-brand span { color: var(--accent); }
-    .nav-badge {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
-      color: var(--green); border: 1px solid var(--green);
-      padding: 2px 8px; border-radius: 3px; text-transform: uppercase;
+    .nav-signup {
+      background: var(--accent); color: #fff;
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 0.45rem 1.2rem; border-radius: 4px;
+      text-decoration: none; transition: background 0.2s;
     }
+    .nav-signup:hover { background: var(--accent2); }
 
-    /* â”€â”€ HERO â”€â”€ */
+    /* -- HERO -- */
     .hero {
       min-height: 100vh;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -107,7 +109,7 @@
       letter-spacing: 0.1em;
     }
 
-    /* â”€â”€ SECTION WRAPPER â”€â”€ */
+    /* -- SECTION WRAPPER -- */
     section { padding: 5rem 2rem; }
     .section-inner { max-width: 1100px; margin: 0 auto; }
     .section-eyebrow {
@@ -123,7 +125,7 @@
       margin-bottom: 3rem;
     }
 
-    /* â”€â”€ FEATURES GRID â”€â”€ */
+    /* -- FEATURES GRID -- */
     .features-section { background: var(--surface); }
     .features-grid {
       display: grid;
@@ -147,7 +149,7 @@
     }
     .feature-card p { font-size: 0.92rem; color: var(--muted); }
 
-    /* â”€â”€ AUDIENCE â”€â”€ */
+    /* -- AUDIENCE -- */
     .audience-section { background: var(--bg); }
     .audience-grid {
       display: grid;
@@ -166,7 +168,7 @@
     }
     .audience-card p { font-size: 0.9rem; color: var(--muted); }
 
-    /* â”€â”€ COMMS SECTION â”€â”€ */
+    /* -- COMMS SECTION -- */
     .comms-section { background: var(--surface2); }
     .comms-layout {
       display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
@@ -218,9 +220,9 @@
       font-size: 0.92rem; color: var(--text);
       padding: 0.3rem 0; display: flex; align-items: flex-start; gap: 0.5rem;
     }
-    .bullet-list li::before { content: 'â–¸'; color: var(--accent); flex-shrink: 0; }
+    .bullet-list li::before { content: '▸'; color: var(--accent); flex-shrink: 0; }
 
-    /* â”€â”€ CTA â”€â”€ */
+    /* -- CTA -- */
     .cta-section {
       background: linear-gradient(135deg, rgba(59,143,212,0.08) 0%, rgba(10,12,15,0) 60%),
                   var(--surface);
@@ -246,7 +248,7 @@
     }
     .btn-ghost:hover { border-color: var(--accent); color: var(--heading); }
 
-    /* â”€â”€ FOOTER â”€â”€ */
+    /* -- FOOTER -- */
     footer {
       background: var(--bg);
       border-top: 1px solid var(--border);
@@ -255,7 +257,7 @@
       font-size: 0.82rem; color: var(--muted);
     }
 
-    /* â”€â”€ RESPONSIVE â”€â”€ */
+    /* -- RESPONSIVE -- */
     @media (max-width: 768px) {
       .hero-stats { gap: 2rem; }
       .comms-layout { grid-template-columns: 1fr; gap: 2rem; }
@@ -270,7 +272,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-brand">milsim<span>-planning</span></div>
-  <div class="nav-badge">Open Source</div>
+  <a href="mailto:eric@hexgarage.com?subject=Waitlist" class="nav-signup">Sign Up</a>
 </nav>
 
 <!-- HERO -->
@@ -278,11 +280,12 @@
   <div class="hero-eyebrow">Tactical Operations Software</div>
   <h1>Plan the Mission.<br><em>Win the Sim.</em></h1>
   <p class="hero-sub">
-    Command-grade planning tools for wargame clubs and milsim groups.
-    Operations, comms, frequencies â€” all in one system.
+    Command-level planning for serious sim groups. Build your order of battle,
+    assign radio frequencies, detect conflicts, and export your comms plan —
+    all from any browser.
   </p>
-  <a href="https://github.com/erichexter/milsim-planning" class="hero-cta">
-    View on GitHub â†’
+  <a href="mailto:eric@hexgarage.com?subject=Waitlist" class="hero-cta">
+    Join the Waitlist →
   </a>
   <div class="hero-stats">
     <div class="stat"><div class="stat-num">NATO</div><div class="stat-label">Validated</div></div>
@@ -296,37 +299,37 @@
   <div class="section-inner">
     <div class="section-eyebrow">Capabilities</div>
     <h2>Everything Your Op Needs</h2>
-    <p class="section-lead">From initial OPORD to post-action review â€” milsim-planning handles the logistics so your team stays focused on the mission.</p>
+    <p class="section-lead">From initial OPORD to post-action review — milsim-planning handles the logistics so your team stays focused on the mission.</p>
     <div class="features-grid">
       <div class="feature-card">
-        <span class="feature-icon">ðŸ—ºï¸</span>
+        <span class="feature-icon">🗺️</span>
         <h3>Operations Planning</h3>
         <p>Create and manage full operations with faction assignments, phase lines, and objective tracking across your entire event.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">ðŸ“»</span>
+        <span class="feature-icon">📻</span>
         <h3>Radio Frequency Management</h3>
-        <p>CRUD for radio channels with NATO-validated frequency ranges. Assign channels to squads and platoons. Conflict detection built in.</p>
+        <p>NATO-validated frequency ranges. Assign channels to squads and platoons. Conflict detection built in.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">ðŸ“‹</span>
+        <span class="feature-icon">📋</span>
         <h3>Frequency Audit Log</h3>
         <p>Full change history for every frequency assignment. Filter by operation, date, or unit. Export to CSV for debrief documentation.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">âš”ï¸</span>
+        <span class="feature-icon">⚔️</span>
         <h3>Faction Management</h3>
         <p>Define factions, assign players, and link units to operations. Keep OPFOR and BLUFOR separated and organized.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">âš¡</span>
+        <span class="feature-icon">⚡</span>
         <h3>Conflict Detection</h3>
         <p>Real-time detection when two units share the same frequency range. No more stepped-on comms during the op.</p>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">ðŸ“¦</span>
+        <span class="feature-icon">📦</span>
         <h3>CSV Export</h3>
-        <p>One-click export of frequency tables and audit logs. Print, distribute, or archive â€” your call.</p>
+        <p>One-click export of frequency tables and audit logs. Print, distribute, or archive — your call.</p>
       </div>
     </div>
   </div>
@@ -341,7 +344,7 @@
           <span class="dot dot-r"></span>
           <span class="dot dot-y"></span>
           <span class="dot dot-g"></span>
-          <span style="margin-left:0.5rem">Frequency Assignment â€” OP IRON RIDGE</span>
+          <span style="margin-left:0.5rem">Frequency Assignment — OP IRON RIDGE</span>
         </div>
         <table class="comms-table">
           <thead>
@@ -403,15 +406,15 @@
     <p class="section-lead">If your events have more than two factions and a radio operator, you need a planning system.</p>
     <div class="audience-grid">
       <div class="audience-card">
-        <h3>ðŸª– Wargame Clubs</h3>
+        <h3>🪖 Wargame Clubs</h3>
         <p>Run multi-faction tabletop operations with structured comms planning and per-operation record keeping.</p>
       </div>
       <div class="audience-card">
-        <h3>ðŸŒ² Airsoft & LARP Milsim</h3>
+        <h3>🌲 Airsoft & LARP Milsim</h3>
         <p>Coordinate large-scale field events. Assign radios, avoid frequency overlap, track changes between games.</p>
       </div>
       <div class="audience-card">
-        <h3>ðŸ“¡ Event Organizers</h3>
+        <h3>📡 Event Organizers</h3>
         <p>Generate frequency tables for distribution at player check-in. Debrief with a clean CSV of every assignment change.</p>
       </div>
     </div>
@@ -422,17 +425,16 @@
 <section class="cta-section">
   <div class="section-inner">
     <h2>Ready to Run Your Op?</h2>
-    <p>Open source. Self-hosted. No subscriptions, no nonsense.</p>
+    <p>Free during beta — paid plans coming soon. Sign up now to get early access.</p>
     <div class="cta-buttons">
-      <a href="https://github.com/erichexter/milsim-planning" class="btn-primary">Get the Code</a>
-      <a href="https://github.com/erichexter/milsim-planning/issues" class="btn-ghost">Request a Feature</a>
+      <a href="mailto:eric@hexgarage.com?subject=Waitlist" class="btn-primary">Join the Waitlist</a>
+      <a href="mailto:eric@hexgarage.com?subject=milsim-planning question" class="btn-ghost">Get Early Access</a>
     </div>
   </div>
 </section>
 
 <footer>
-  &copy; 2026 milsim-planning â€” Open source under MIT license.
-  Built for the field. Maintained with purpose.
+  &copy; 2026 milsim-planning. Built by Hex.
 </footer>
 
 </body>
