@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>milsim-planning â€” Plan the Mission. Win the Sim.</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0c0f;
+      --surface: #111418;
+      --surface2: #181c22;
+      --border: #1e2530;
+      --accent: #3b8fd4;
+      --accent2: #2a6fa8;
+      --green: #4caf7d;
+      --text: #d0d8e4;
+      --muted: #6b7a90;
+      --heading: #e8edf4;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* â”€â”€ NAV â”€â”€ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,12,15,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand {
+      font-size: 1.1rem; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--heading); text-transform: uppercase;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-badge {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--green); border: 1px solid var(--green);
+      padding: 2px 8px; border-radius: 3px; text-transform: uppercase;
+    }
+
+    /* â”€â”€ HERO â”€â”€ */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,143,212,0.07) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(30,37,48,0.4) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(30,37,48,0.4) 40px);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800; letter-spacing: -0.02em;
+      color: var(--heading); line-height: 1.1;
+      margin-bottom: 1.4rem;
+    }
+    .hero h1 em {
+      font-style: normal; color: var(--accent);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--muted); max-width: 580px;
+      margin: 0 auto 2.4rem;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--accent); color: #fff;
+      font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 0.75rem 2rem; border-radius: 5px;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .hero-cta:hover { background: var(--accent2); }
+    .hero-stats {
+      display: flex; gap: 3rem; margin-top: 4rem;
+      position: relative;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 1.8rem; font-weight: 800; color: var(--heading);
+    }
+    .stat-label {
+      font-size: 0.78rem; color: var(--muted); text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* â”€â”€ SECTION WRAPPER â”€â”€ */
+    section { padding: 5rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
+      color: var(--accent); text-transform: uppercase; margin-bottom: 0.6rem;
+    }
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800; color: var(--heading); margin-bottom: 1rem;
+    }
+    .section-lead {
+      font-size: 1.05rem; color: var(--muted); max-width: 640px;
+      margin-bottom: 3rem;
+    }
+
+    /* â”€â”€ FEATURES GRID â”€â”€ */
+    .features-section { background: var(--surface); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.8rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .feature-icon {
+      font-size: 1.8rem; margin-bottom: 1rem; display: block;
+    }
+    .feature-card h3 {
+      font-size: 1.1rem; font-weight: 700; color: var(--heading);
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p { font-size: 0.92rem; color: var(--muted); }
+
+    /* â”€â”€ AUDIENCE â”€â”€ */
+    .audience-section { background: var(--bg); }
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .audience-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.8rem;
+    }
+    .audience-card h3 {
+      font-size: 1rem; font-weight: 700; color: var(--heading);
+      margin-bottom: 0.5rem;
+    }
+    .audience-card p { font-size: 0.9rem; color: var(--muted); }
+
+    /* â”€â”€ COMMS SECTION â”€â”€ */
+    .comms-section { background: var(--surface2); }
+    .comms-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: center;
+    }
+    .comms-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+    }
+    .comms-header {
+      background: var(--border);
+      padding: 0.7rem 1rem;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase;
+      display: flex; gap: 0.5rem;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #e05252; }
+    .dot-y { background: #e0b952; }
+    .dot-g { background: var(--green); }
+    .comms-table { width: 100%; border-collapse: collapse; }
+    .comms-table th {
+      padding: 0.6rem 1rem; text-align: left;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    .comms-table td {
+      padding: 0.6rem 1rem; font-size: 0.88rem; color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+    .comms-table tr:last-child td { border-bottom: none; }
+    .tag {
+      display: inline-block; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.08em; padding: 2px 7px; border-radius: 3px;
+      text-transform: uppercase;
+    }
+    .tag-ok { background: rgba(76,175,125,0.15); color: var(--green); }
+    .tag-warn { background: rgba(224,185,82,0.15); color: #e0b952; }
+
+    .comms-text h3 {
+      font-size: 1.4rem; font-weight: 700; color: var(--heading);
+      margin-bottom: 0.8rem;
+    }
+    .comms-text p { font-size: 0.95rem; color: var(--muted); margin-bottom: 1rem; }
+    .bullet-list { list-style: none; }
+    .bullet-list li {
+      font-size: 0.92rem; color: var(--text);
+      padding: 0.3rem 0; display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+    .bullet-list li::before { content: 'â–¸'; color: var(--accent); flex-shrink: 0; }
+
+    /* â”€â”€ CTA â”€â”€ */
+    .cta-section {
+      background: linear-gradient(135deg, rgba(59,143,212,0.08) 0%, rgba(10,12,15,0) 60%),
+                  var(--surface);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .cta-section h2 { margin-bottom: 0.8rem; }
+    .cta-section p { color: var(--muted); max-width: 520px; margin: 0 auto 2.2rem; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      font-size: 0.95rem; font-weight: 600;
+      padding: 0.75rem 2rem; border-radius: 5px;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--accent2); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+      font-size: 0.95rem; font-weight: 600;
+      padding: 0.75rem 2rem; border-radius: 5px;
+      text-decoration: none; transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--heading); }
+
+    /* â”€â”€ FOOTER â”€â”€ */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.82rem; color: var(--muted);
+    }
+
+    /* â”€â”€ RESPONSIVE â”€â”€ */
+    @media (max-width: 768px) {
+      .hero-stats { gap: 2rem; }
+      .comms-layout { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { flex-direction: column; gap: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">milsim<span>-planning</span></div>
+  <div class="nav-badge">Open Source</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Tactical Operations Software</div>
+  <h1>Plan the Mission.<br><em>Win the Sim.</em></h1>
+  <p class="hero-sub">
+    Command-grade planning tools for wargame clubs and milsim groups.
+    Operations, comms, frequencies â€” all in one system.
+  </p>
+  <a href="https://github.com/erichexter/milsim-planning" class="hero-cta">
+    View on GitHub â†’
+  </a>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">NATO</div><div class="stat-label">Validated</div></div>
+    <div class="stat"><div class="stat-num">Full</div><div class="stat-label">Audit Trail</div></div>
+    <div class="stat"><div class="stat-num">CSV</div><div class="stat-label">Export</div></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Capabilities</div>
+    <h2>Everything Your Op Needs</h2>
+    <p class="section-lead">From initial OPORD to post-action review â€” milsim-planning handles the logistics so your team stays focused on the mission.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">ðŸ—ºï¸</span>
+        <h3>Operations Planning</h3>
+        <p>Create and manage full operations with faction assignments, phase lines, and objective tracking across your entire event.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">ðŸ“»</span>
+        <h3>Radio Frequency Management</h3>
+        <p>CRUD for radio channels with NATO-validated frequency ranges. Assign channels to squads and platoons. Conflict detection built in.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">ðŸ“‹</span>
+        <h3>Frequency Audit Log</h3>
+        <p>Full change history for every frequency assignment. Filter by operation, date, or unit. Export to CSV for debrief documentation.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">âš”ï¸</span>
+        <h3>Faction Management</h3>
+        <p>Define factions, assign players, and link units to operations. Keep OPFOR and BLUFOR separated and organized.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">âš¡</span>
+        <h3>Conflict Detection</h3>
+        <p>Real-time detection when two units share the same frequency range. No more stepped-on comms during the op.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">ðŸ“¦</span>
+        <h3>CSV Export</h3>
+        <p>One-click export of frequency tables and audit logs. Print, distribute, or archive â€” your call.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMS VISUAL -->
+<section class="comms-section">
+  <div class="section-inner">
+    <div class="comms-layout">
+      <div class="comms-visual">
+        <div class="comms-header">
+          <span class="dot dot-r"></span>
+          <span class="dot dot-y"></span>
+          <span class="dot dot-g"></span>
+          <span style="margin-left:0.5rem">Frequency Assignment â€” OP IRON RIDGE</span>
+        </div>
+        <table class="comms-table">
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Channel</th>
+              <th>Freq (MHz)</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1st Platoon</td>
+              <td>ALPHA NET</td>
+              <td>148.000</td>
+              <td><span class="tag tag-ok">Clear</span></td>
+            </tr>
+            <tr>
+              <td>2nd Platoon</td>
+              <td>BRAVO NET</td>
+              <td>152.500</td>
+              <td><span class="tag tag-ok">Clear</span></td>
+            </tr>
+            <tr>
+              <td>OPFOR HQ</td>
+              <td>CHARLIE NET</td>
+              <td>155.000</td>
+              <td><span class="tag tag-warn">Conflict</span></td>
+            </tr>
+            <tr>
+              <td>Command</td>
+              <td>DELTA NET</td>
+              <td>162.000</td>
+              <td><span class="tag tag-ok">Clear</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="comms-text">
+        <h3>Comms Planning That Actually Works</h3>
+        <p>Building a frequency plan in a spreadsheet means missed conflicts, confusion at loadout, and broken comms in the field.</p>
+        <p>milsim-planning gives you a live system with:</p>
+        <ul class="bullet-list">
+          <li>Unit-level channel assignment per operation</li>
+          <li>NATO-validated frequency ranges enforced at entry</li>
+          <li>Visual conflict flags before the op starts</li>
+          <li>Full change log for every assignment made</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="audience-section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Who It's For</div>
+    <h2>Built for Serious Sim Groups</h2>
+    <p class="section-lead">If your events have more than two factions and a radio operator, you need a planning system.</p>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <h3>ðŸª– Wargame Clubs</h3>
+        <p>Run multi-faction tabletop operations with structured comms planning and per-operation record keeping.</p>
+      </div>
+      <div class="audience-card">
+        <h3>ðŸŒ² Airsoft & LARP Milsim</h3>
+        <p>Coordinate large-scale field events. Assign radios, avoid frequency overlap, track changes between games.</p>
+      </div>
+      <div class="audience-card">
+        <h3>ðŸ“¡ Event Organizers</h3>
+        <p>Generate frequency tables for distribution at player check-in. Debrief with a clean CSV of every assignment change.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-inner">
+    <h2>Ready to Run Your Op?</h2>
+    <p>Open source. Self-hosted. No subscriptions, no nonsense.</p>
+    <div class="cta-buttons">
+      <a href="https://github.com/erichexter/milsim-planning" class="btn-primary">Get the Code</a>
+      <a href="https://github.com/erichexter/milsim-planning/issues" class="btn-ghost">Request a Feature</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 milsim-planning â€” Open source under MIT license.
+  Built for the field. Maintained with purpose.
+</footer>
+
+</body>
+</html>
